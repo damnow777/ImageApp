@@ -17,6 +17,11 @@ namespace ImageApp2
             InitializeComponent();
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            timer1.Start();
+        }
+
         // LOAD FILE
         private void button1_Click(object sender, EventArgs e)
         {
@@ -106,5 +111,10 @@ namespace ImageApp2
             else
                 MessageBox.Show("Brak obrazu do zapisu", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            label1.Text = DateTime.Now.ToLongTimeString();
+        } 
     }
 }
