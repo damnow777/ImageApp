@@ -112,6 +112,7 @@ namespace ImageApp2
                 MessageBox.Show("Brak obrazu do zapisu", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+        // GET TIME
         private void timer1_Tick(object sender, EventArgs e)
         {
             label1.Text = DateTime.Now.ToLongTimeString();
