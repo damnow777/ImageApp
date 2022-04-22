@@ -100,13 +100,22 @@ namespace ImageApp2
         // EXIT APP
         private void button3_Click(object sender, EventArgs e)
         {
+            if (pictureBox1.Image != null)
+            {
+                DialogResult result = MessageBox.Show("Czy chcesz zapisać obraz?", "Uwaga", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    SaveImage();
+                }
+            }
             Application.Exit();
         }
 
         // SAVE IMAGE
         private void button4_Click(object sender, EventArgs e)
         {
-            if(pictureBox1.Image != null)
+            if (pictureBox1.Image != null)
                 SaveImage();
             else
                 MessageBox.Show("Brak obrazu do zapisu", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -116,6 +125,6 @@ namespace ImageApp2
         private void timer1_Tick(object sender, EventArgs e)
         {
             label1.Text = DateTime.Now.ToLongTimeString();
-        } 
+        }
     }
 }
