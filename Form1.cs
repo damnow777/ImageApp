@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,11 +13,14 @@ namespace ImageApp2
 {
     public partial class Form1 : Form
     {
+        private OpenFileDialog fileDialog = new OpenFileDialog();
+
         public Form1()
         {
             InitializeComponent();
         }
 
+        // START TIMER
         private void Form1_Load(object sender, EventArgs e)
         {
             timer1.Start();
@@ -27,7 +31,7 @@ namespace ImageApp2
         {
             try
             {
-                OpenFileDialog fileDialog = new OpenFileDialog();
+                
                 fileDialog.Title = "Wybierz obraz";
                 fileDialog.Filter = "jpg files (*.jpg) |*.jpg| PNG files (*.png)|*.png| All Files (*.*) |*.*";
 
@@ -71,6 +75,9 @@ namespace ImageApp2
             pictureBox1.CancelAsync();
             pictureBox1.Image.Dispose();
             pictureBox1.Image = null;
+            redBar.Value = 0;
+            greenBar.Value = 0;
+            blueBar.Value = 0;
         }
 
         // SAVE IMAGE METHOD
@@ -125,6 +132,70 @@ namespace ImageApp2
         private void timer1_Tick(object sender, EventArgs e)
         {
             label1.Text = DateTime.Now.ToLongTimeString();
+        }
+
+        // RGB TRACKBAR METHOD
+        private void setColor()
+        {
+            float changeRed = redBar.Value; //* 0.1f;
+            float changeGreen = greenBar.Value; //* 0.1f;
+            float changeBlue = blueBar.Value; //* 0.1f;
+
+            if(pictureBox1.Image != null)
+            {
+                Image image = pictureBox1.Image;
+                Bitmap bmpInverter = new Bitmap(image.Width, image.Height);
+                ImageAttributes imageAttributes = new ImageAttributes();
+                ColorMatrix colorMatrix = new ColorMatrix(new float[][]
+                {
+                new float[] { 1+changeRed, 0, 0, 0, 0},
+                new float[] { 0, 1+changeGreen, 0, 0, 0},
+                new float[] { 0, 0, 1+changeBlue, 0, 0},
+                new float[] {0, 0, 0, 1, 0},
+                new float[] {0, 0, 0, 0, 1}
+                });
+
+                imageAttributes.SetColorMatrix(colorMatrix);
+                Graphics g = Graphics.FromImage(bmpInverter);
+                g.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, imageAttributes);
+                g.Dispose();
+                pictureBox1.Image = bmpInverter;
+            }
+           
+        }
+
+        private void redBar_Scroll(object sender, EventArgs e)
+        {
+            setColor();
+        }
+
+        private void greenBar_Scroll(object sender, EventArgs e)
+        {
+            setColor();
+        }
+
+        private void blueBar_Scroll(object sender, EventArgs e)
+        {
+            setColor();
+        }
+
+        // RESET
+        private void reset()
+        {
+            Image file;
+            if(pictureBox1 != null)
+            {
+                file = Image.FromFile(fileDialog.FileName);
+                pictureBox1.Image = file;
+                redBar.Value = 0;
+                greenBar.Value = 0;
+                blueBar.Value = 0;
+            }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            reset();
         }
     }
 }

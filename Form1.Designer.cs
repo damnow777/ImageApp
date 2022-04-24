@@ -38,13 +38,30 @@
             this.Load = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.redBar = new System.Windows.Forms.TrackBar();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.blueBar = new System.Windows.Forms.TrackBar();
+            this.greenBar = new System.Windows.Forms.TrackBar();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.redBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.blueBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.greenBar)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
+            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.blueBar);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.greenBar);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.redBar);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.Save);
             this.panel1.Controls.Add(this.Exit);
@@ -146,6 +163,84 @@
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // redBar
+            // 
+            this.redBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.redBar.Location = new System.Drawing.Point(30, 307);
+            this.redBar.Name = "redBar";
+            this.redBar.Size = new System.Drawing.Size(153, 56);
+            this.redBar.TabIndex = 5;
+            this.redBar.Scroll += new System.EventHandler(this.redBar_Scroll);
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Comic Sans MS", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(12, 307);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(22, 24);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "R";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Comic Sans MS", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(12, 341);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(22, 24);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "G";
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Comic Sans MS", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(12, 375);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(21, 24);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "B";
+            // 
+            // blueBar
+            // 
+            this.blueBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.blueBar.Location = new System.Drawing.Point(30, 375);
+            this.blueBar.Name = "blueBar";
+            this.blueBar.Size = new System.Drawing.Size(153, 56);
+            this.blueBar.TabIndex = 9;
+            this.blueBar.Scroll += new System.EventHandler(this.blueBar_Scroll);
+            // 
+            // greenBar
+            // 
+            this.greenBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.greenBar.Location = new System.Drawing.Point(30, 341);
+            this.greenBar.Name = "greenBar";
+            this.greenBar.Size = new System.Drawing.Size(153, 56);
+            this.greenBar.TabIndex = 7;
+            this.greenBar.Scroll += new System.EventHandler(this.greenBar_Scroll);
+            // 
+            // button1
+            // 
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(50)))), ((int)(((byte)(78)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Comic Sans MS", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(0, 199);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(194, 38);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "Reset";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -160,6 +255,9 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.redBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.blueBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.greenBar)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -174,6 +272,13 @@
         private System.Windows.Forms.Button Save;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.TrackBar redBar;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TrackBar blueBar;
+        private System.Windows.Forms.TrackBar greenBar;
+        private System.Windows.Forms.Button button1;
     }
 }
 
