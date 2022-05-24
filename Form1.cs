@@ -5,15 +5,18 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.DataVisualization.Charting;
 using System.Windows.Forms;
 
 namespace ImageApp2
 {
     public partial class Form1 : Form
     {
-        private OpenFileDialog fileDialog = new OpenFileDialog();
+        OpenFileDialog fileDialog = new OpenFileDialog();
+
 
         public Form1()
         {
@@ -31,21 +34,21 @@ namespace ImageApp2
         {
             try
             {
-                
+
                 fileDialog.Title = "Wybierz obraz";
                 fileDialog.Filter = "jpg files (*.jpg) |*.jpg| PNG files (*.png)|*.png| All Files (*.*) |*.*";
 
                 if (fileDialog.ShowDialog() == DialogResult.OK)
                 {
                     Bitmap image = new Bitmap(fileDialog.FileName);
-                    //int x, y;
+                    int x, y;
 
                     //for (x = 0; x < image.Width; x++)
                     //{
                     //    for (y = 0; y < image.Height; y++)
                     //    {
                     //        Color pixelColor = image.GetPixel(x, y);
-                    //        Color newColor = Color.FromArgb(pixelColor.G, 0, 0);
+                    //        Color newColor = Color.Gray;//FromArgb(pixelColor.R, 0, 0);
                     //        image.SetPixel(x, y, newColor);
                     //    }
                     //}
@@ -137,11 +140,11 @@ namespace ImageApp2
         // RGB TRACKBAR METHOD
         private void setColor()
         {
-            float changeRed = redBar.Value; //* 0.1f;
-            float changeGreen = greenBar.Value; //* 0.1f;
-            float changeBlue = blueBar.Value; //* 0.1f;
+            float changeRed = redBar.Value * 0.1f;
+            float changeGreen = greenBar.Value * 0.1f;
+            float changeBlue = blueBar.Value * 0.1f;
 
-            if(pictureBox1.Image != null)
+            if (pictureBox1.Image != null)
             {
                 Image image = pictureBox1.Image;
                 Bitmap bmpInverter = new Bitmap(image.Width, image.Height);
@@ -161,7 +164,7 @@ namespace ImageApp2
                 g.Dispose();
                 pictureBox1.Image = bmpInverter;
             }
-           
+
         }
 
         private void redBar_Scroll(object sender, EventArgs e)
@@ -183,7 +186,7 @@ namespace ImageApp2
         private void reset()
         {
             Image file;
-            if(pictureBox1 != null)
+            if (pictureBox1 != null)
             {
                 file = Image.FromFile(fileDialog.FileName);
                 pictureBox1.Image = file;
@@ -197,5 +200,132 @@ namespace ImageApp2
         {
             reset();
         }
+
+        // SKALA SZAROŚCI
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            pictureBox1.Visible = true;
+            int x, y;
+            Bitmap bitmap = new Bitmap(pictureBox1.Image);
+            double R = 0.299, G = 0.527, B = 0.114;
+            for (x = 0; x < pictureBox1.Image.Width; x++)
+            {
+                for (y = 0; y < pictureBox1.Image.Height; y++)
+                {
+                    Color pixelColor = bitmap.GetPixel(x, y);
+                    int wartoscSkali = (int)(
+                        (pixelColor.R * R) +
+                        (pixelColor.G * G) +
+                        (pixelColor.B * B));
+                    Color skalaSzarosci = Color.FromArgb(
+                        pixelColor.A,
+                        wartoscSkali,
+                        wartoscSkali,
+                        wartoscSkali);
+                    bitmap.SetPixel(x, y, skalaSzarosci);
+                }
+            }
+            pictureBox1.Image = bitmap;
+        }
+
+        // HISTOGRAM RGB
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                Bitmap c = new Bitmap(pictureBox1.Image);
+                int[] red = new int[256];
+                int[] green = new int[256];
+                int[] blue = new int[256];
+                for (int x = 0; x < pictureBox1.Width; x++)
+                {
+                    for (int y = 0; y < pictureBox1.Height; y++)
+                    {
+                        Color pixel = ((Bitmap)pictureBox1.Image).GetPixel(x, y);
+                        red[pixel.R]++;
+                        green[pixel.G]++;
+                        blue[pixel.B]++;
+                    }
+                }
+
+
+                chart1.Series["red"].Points.Clear();
+                chart1.Series["green"].Points.Clear();
+                chart1.Series["blue"].Points.Clear();
+                for (int i = 0; i < 256; i++)
+                {
+                    chart1.Series["red"].Points.AddXY(i, red[i]);
+                    chart1.Series["green"].Points.AddXY(i, green[i]);
+                    chart1.Series["blue"].Points.AddXY(i, blue[i]);
+                }
+                chart1.Invalidate();
+            }
+            else
+            {
+                MessageBox.Show("Brak zdjęcia", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        // HISTOGRAM
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+            {
+                int z, b;
+                if (pictureBox1.Image != null)
+                {
+                    Bitmap bitmap = new Bitmap(pictureBox1.Image);
+                    double R = 0.299, G = 0.527, B = 0.114;
+                    for (z = 0; z < pictureBox1.Image.Width; z++)
+                    {
+                        for (b = 0; b < pictureBox1.Image.Height; b++)
+                        {
+                            Color pixelColor = bitmap.GetPixel(z, b);
+                            int wartoscSkali = (int)(
+                                (pixelColor.R * R) +
+                                (pixelColor.G * G) +
+                                (pixelColor.B * B));
+                            Color skalaSzarosci = Color.FromArgb(
+                                pixelColor.A,
+                                wartoscSkali,
+                                wartoscSkali,
+                                wartoscSkali);
+                            bitmap.SetPixel(z, b, skalaSzarosci);
+                        }
+                    }
+
+                    int[] red = new int[256];
+                    int[] green = new int[256];
+                    int[] blue = new int[256];
+                    for (int x = 0; x < bitmap.Width; x++)
+                    {
+                        for (int y = 0; y < bitmap.Height; y++)
+                        {
+                            Color pixel = ((Bitmap)bitmap).GetPixel(x, y);
+                            red[pixel.R]++;
+                            green[pixel.G]++;
+                            blue[pixel.B]++;
+                        }
+                    }
+
+                    chart2.Series["red"].Points.Clear();
+                    chart2.Series["green"].Points.Clear();
+                    chart2.Series["blue"].Points.Clear();
+                    for (int i = 0; i < 256; i++)
+                    {
+                        chart2.Series["red"].Points.AddXY(i, red[i]);
+                        chart2.Series["green"].Points.AddXY(i, green[i]);
+                        chart2.Series["blue"].Points.AddXY(i, blue[i]);
+                    }
+                    chart2.Invalidate();
+                }
+                else
+                {
+                    MessageBox.Show("Brak zdjęcia", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+
     }
 }
